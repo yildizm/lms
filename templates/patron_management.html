@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %} Home page {% endblock %}
+{% block sidebar %}
+<p><a href="/pat/add">Add Patron</a></p>
+<p><a href="/pat/delete">Delete Patron</a></p>
+<p><a href="/pat/query">Query Patron</a></p>
+<p><a href="/pat/borrow">Borrow Book</a></p>
+<p><a href="/pat/return">Return Book</a></p>
+{% endblock %} 
+{% block content %}
+
+<h1>Patron management</h1>
+{% if action == "add" %}
+<form action="/lib/add" method="post" id="login-form">{% csrf_token %}
+  <div class="form-row">
+    
+    <label class="required" for="id_username">Username:</label> <input id="id_username" maxlength="254" name="username" type="text" />
+  </div>
+  <div class="form-row">
+    
+    <label class="required" for="id_password">Password:</label> <input id="id_password" name="password" type="password" />
+    <input type="hidden" name="next" value="/admin/" />
+  </div>
+  
+  
+  <div class="submit-row">
+    <label>&nbsp;</label><input type="submit" value="Add" />
+  </div>
+</form>
+
+{% elif action == "delete" %}
+<form action="/lib/delete" method="post" id="login-form">{% csrf_token %}
+  <div class="form-row">
+    
+    <label class="required" for="id_username">Username:</label> <input id="id_username" maxlength="254" name="username" type="text" />
+  </div>  
+  
+  <div class="submit-row">
+    <label>&nbsp;</label><input type="submit" value="Delete" />
+  </div>
+</form>
+{% elif action == "query" %}
+<form action="/pat/query" method="post" id="login-form">{% csrf_token %}
+  <div class="form-row">
+    
+    <label class="required" for="id_username">Name:</label> <input id="id_username" maxlength="254" name="name" type="text" />
+  </div>  
+  
+  <div class="submit-row">
+    <label>&nbsp;</label><input type="submit" value="Query" />
+  </div>
+</form>
+{% elif action == "borrow" %}
+<form action="/pat/query" method="post" id="login-form">{% csrf_token %}
+  <div class="form-row">
+    
+    <label class="required" for="id_username">Name:</label> <input id="id_username" maxlength="254" name="name" type="text" />
+  </div>  
+  
+  <div class="submit-row">
+    <label>&nbsp;</label><input type="submit" value="Borrow" />
+  </div>
+</form>
+
+{% elif action == "return" %}
+<form action="/pat/query" method="post" id="login-form">{% csrf_token %}
+  <div class="form-row">
+    
+    <label class="required" for="id_username">Name:</label> <input id="id_username" maxlength="254" name="name" type="text" />
+  </div>  
+  
+  <div class="submit-row">
+    <label>&nbsp;</label><input type="submit" value="Return" />
+  </div>
+</form>
+
+{% else%}
+{{userlist}}
+{% for user in userlist %}
+{{user.username}} <br>
+{% endfor %}
+
+{% endif %}
+
+{% endblock %}

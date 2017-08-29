@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %} Home page {% endblock %}
+{% block sidebar %}
+<p><a href="/cat/add">Add Book</a></p>
+<p><a href="/cat/delete">Delete Book</a></p>
+<p><a href="/cat/query">Query Book</a></p>
+{% endblock %} 
+{% block content %}
+
+<h1>catalog management</h1>
+{% if action == "add" %}
+<form action="/cat/add" method="post" id="login-form">{% csrf_token %}
+  <div class="form-row">
+    
+    <label class="required" for="id_username">Title:</label> <input id="id_username" maxlength="254" name="title" type="text" />
+  </div>
+  <div class="form-row">
+    
+    <label class="required" for="id_password">Author:</label> <input id="id_password" name="author" type="text" />
+  </div>
+  <div class="form-row">
+    
+    <label class="required" for="id_password">Isbn:</label> <input id="id_password" name="isbn" type="text" />
+  </div>
+  
+  <div class="submit-row">
+    <label>&nbsp;</label><input type="submit" value="Add" />
+  </div>
+</form>
+
+{% elif action == "delete" %}
+<form action="/cat/delete" method="post" id="login-form">{% csrf_token %}
+  <div class="form-row">
+    
+    <label class="required" for="id_username">Title:</label> <input id="id_username" maxlength="254" name="title" type="text" />
+  </div>  
+  
+  <div class="submit-row">
+    <label>&nbsp;</label><input type="submit" value="Delete" />
+  </div>
+</form>
+
+{% elif action == "query" %}
+<form action="/cat/query" method="post" id="login-form">{% csrf_token %}
+  <div class="form-row">
+    
+    <label class="required" for="id_username">Title:</label> <input id="id_username" maxlength="254" name="title" type="text" />
+  </div>  
+  
+  <div class="submit-row">
+    <label>&nbsp;</label><input type="submit" value="Query" />
+  </div>
+</form>
+
+{% else%}
+
+<br>
+{{userlist}}
+
+{{userlist.first}}
+<br>
+{% for book in userlist %}
+{% endfor %}
+
+{% endif %}
+
+{% endblock %}

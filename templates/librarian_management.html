@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %} Home page {% endblock %}
+{% block sidebar %}
+<p><a href="/lib/add">Add Librarian</a></p>
+<p><a href="/lib/delete">Delete Librarian</a></p>
+{% endblock %} 
+{% block content %}
+
+<h1>librarian management</h1>
+{% if action == "add" %}
+<form action="/lib/add" method="post" id="login-form">{% csrf_token %}
+  <div class="form-row">
+    
+    <label class="required" for="id_username">Username:</label> <input id="id_username" maxlength="254" name="username" type="text" />
+  </div>
+  <div class="form-row">
+    
+    <label class="required" for="id_password">Password:</label> <input id="id_password" name="password" type="password" />
+    <input type="hidden" name="next" value="/admin/" />
+  </div>
+  
+  
+  <div class="submit-row">
+    <label>&nbsp;</label><input type="submit" value="Add" />
+  </div>
+</form>
+
+{% elif action == "delete" %}
+<form action="/lib/delete" method="post" id="login-form">{% csrf_token %}
+  <div class="form-row">
+    
+    <label class="required" for="id_username">Username:</label> <input id="id_username" maxlength="254" name="username" type="text" />
+  </div>  
+  
+  <div class="submit-row">
+    <label>&nbsp;</label><input type="submit" value="Delete" />
+  </div>
+</form>
+{% else%}
+The librarians <br>
+{% for user in userlist %}
+{{user.username}} <br>
+{% endfor %}
+
+{% endif %}
+
+{% endblock %}
